@@ -62,6 +62,21 @@ public final class ModConfig {
     /** Прозрачность приглушённых строк (0.0 – 1.0). */
     public double dimAlpha = 0.45;
 
+    /** Желаемое расстояние от глаз игрока до текста в блоках (2–6); в тесных местах текст ближе, но не меньше 2. */
+    public double textDistance = 4.0;
+
+    /** Не используется (место текста подбирается автоматически); оставлено для совместимости со старыми конфигами. */
+    public double heightOffset = -0.6;
+
+    /** Размер текста в мире: блоков на один пиксель шрифта (у ников над головой — 0.025). */
+    public double worldTextScale = 0.02;
+
+    /** Ширина переноса строк в пикселях шрифта (до масштабирования). */
+    public int worldWrapWidth = 220;
+
+    /** Скорость «догоняния» текстом взгляда игрока (1/сек). Меньше — плавнее и ленивее, больше — жёстче. */
+    public double followSpeed = 5.0;
+
     /** Базовый адрес LrcLib (можно указать свой self-hosted инстанс). */
     public String lrclibUrl = "https://lrclib.net";
 
@@ -116,6 +131,11 @@ public final class ModConfig {
         backgroundOpacity = Math.max(0, Math.min(backgroundOpacity, 255));
         maxWidthPercent = Math.max(20, Math.min(maxWidthPercent, 100));
         dimAlpha = Math.max(0.0, Math.min(dimAlpha, 1.0));
+        textDistance = Math.max(2.0, Math.min(textDistance, 6.0));
+        heightOffset = Math.max(-3.0, Math.min(heightOffset, 3.0));
+        worldTextScale = Math.max(0.005, Math.min(worldTextScale, 0.1));
+        worldWrapWidth = Math.max(80, Math.min(worldWrapWidth, 600));
+        followSpeed = Math.max(0.5, Math.min(followSpeed, 30.0));
         if (sourceFilter == null) {
             sourceFilter = new ArrayList<>();
         }
