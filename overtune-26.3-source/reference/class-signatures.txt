@@ -1,0 +1,637 @@
+# javap API shape of user-provided original JAR
+
+NOTE: This is a public/private class declaration reference, NOT Java source.
+
+Compiled from "OvertuneClient.java"
+public class dev.ob8y.overtune.client.OvertuneClient implements net.fabricmc.api.ClientModInitializer {
+  private static net.minecraft.client.KeyMapping openMusicPlayer;
+  private static int eventCheckTicks;
+  private static java.lang.String activeEvent;
+  private static java.lang.String candidateEvent;
+  private static long candidateSinceMs;
+  private static long candidateReadyAtMs;
+  private static final java.util.Map<java.lang.String, java.lang.Long> lastEventTriggers;
+  private static final java.util.Map<java.lang.String, java.lang.Long> latchedEventAbsentSince;
+  private static final java.util.Set<java.lang.String> latchedEvents;
+  private static final java.util.Set<java.lang.String> STORY_EVENTS;
+  private static final java.util.Set<java.lang.String> ENCOUNTER_EVENTS;
+  private static final long ENCOUNTER_LATCH_CLEAR_MS;
+  private static final long WITHER_LATCH_CLEAR_MS;
+  private static final long CREDITS_LATCH_CLEAR_MS;
+  public dev.ob8y.overtune.client.OvertuneClient();
+  public void onInitializeClient();
+  public static void openMusicPlayer(net.minecraft.client.Minecraft);
+  private static void tickEventSoundtrack(net.minecraft.client.Minecraft);
+  private static void updateEncounterLatches(net.minecraft.client.Minecraft, java.lang.String, long);
+  private static long latchClearMs(java.lang.String);
+  private static boolean isInEnd(net.minecraft.client.Minecraft);
+  private static void clearEncounterLatches();
+  private static java.lang.String detectedEvent(net.minecraft.client.Minecraft, dev.ob8y.overtune.client.music.MusicPlayerConfig$Settings, dev.ob8y.overtune.client.music.OvertuneWorldEvents$WorldState);
+  private static java.lang.String detectedStoryEvent(net.minecraft.client.Minecraft, dev.ob8y.overtune.client.music.MusicPlayerConfig$Settings, dev.ob8y.overtune.client.music.OvertuneWorldEvents$WorldState);
+  private static java.lang.String detectedHomecoming(net.minecraft.client.Minecraft, dev.ob8y.overtune.client.music.OvertuneWorldEvents$WorldState, long);
+  private static boolean isDeepDark(net.minecraft.client.Minecraft);
+  private static boolean hasAncientCitySignal(net.minecraft.client.Minecraft, net.minecraft.core.BlockPos);
+  private static void markStoryPlayed(java.lang.String, net.minecraft.client.Minecraft, dev.ob8y.overtune.client.music.OvertuneWorldEvents$WorldState);
+  private static java.lang.String worldKey(net.minecraft.client.Minecraft);
+  private static java.lang.String sha256(java.lang.String);
+  private static java.lang.Boolean lambda$isDeepDark$0(net.minecraft.resources.ResourceKey);
+  private static java.lang.Long lambda$updateEncounterLatches$0(long, java.lang.String);
+  private static void lambda$onInitializeClient$0(net.minecraft.client.Minecraft);
+  static {};
+}
+
+Compiled from "ChannelAccessor.java"
+public interface dev.ob8y.overtune.client.mixin.ChannelAccessor {
+  public abstract int overtune$getSource();
+}
+
+Compiled from "OptionsScreenMixin.java"
+public abstract class dev.ob8y.overtune.client.mixin.OptionsScreenMixin extends net.minecraft.client.gui.screens.Screen {
+  protected dev.ob8y.overtune.client.mixin.OptionsScreenMixin(net.minecraft.network.chat.Component);
+  private void overtune$addMusicPlayerButton(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  private void lambda$overtune$addMusicPlayerButton$0(net.minecraft.client.gui.screens.Screen, net.minecraft.client.gui.components.Button);
+}
+
+Compiled from "PauseScreenMixin.java"
+public abstract class dev.ob8y.overtune.client.mixin.PauseScreenMixin extends net.minecraft.client.gui.screens.Screen {
+  protected dev.ob8y.overtune.client.mixin.PauseScreenMixin(net.minecraft.network.chat.Component);
+  private void overtune$addMusicPlayerButton(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
+  private void lambda$overtune$addMusicPlayerButton$0(net.minecraft.client.gui.screens.Screen, net.minecraft.client.gui.components.Button);
+}
+
+Compiled from "SoundBufferLibraryMixin.java"
+public abstract class dev.ob8y.overtune.client.mixin.SoundBufferLibraryMixin {
+  public dev.ob8y.overtune.client.mixin.SoundBufferLibraryMixin();
+  private void overtune$getImportedBuffer(net.minecraft.resources.Identifier, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.util.concurrent.CompletableFuture<com.mojang.blaze3d.audio.SoundBuffer>>);
+  private void overtune$getImportedStream(net.minecraft.resources.Identifier, boolean, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<java.util.concurrent.CompletableFuture<net.minecraft.client.sounds.AudioStream>>);
+}
+
+Compiled from "SoundEngineAccessor.java"
+public interface dev.ob8y.overtune.client.mixin.SoundEngineAccessor {
+  public abstract java.util.Map<net.minecraft.client.resources.sounds.SoundInstance, net.minecraft.client.sounds.ChannelAccess$ChannelHandle> overtune$getInstanceToChannel();
+}
+
+Compiled from "SoundManagerAccessor.java"
+public interface dev.ob8y.overtune.client.mixin.SoundManagerAccessor {
+  public abstract net.minecraft.client.sounds.SoundEngine overtune$getSoundEngine();
+}
+
+Compiled from "AdvancedMusicPlayerScreen.java"
+public class dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen extends net.minecraft.client.gui.screens.Screen {
+  private static final int BG;
+  private static final int SIDEBAR;
+  private static final int SURFACE;
+  private static final int SURFACE_HOVER;
+  private static final int BAR;
+  private static final int DIVIDER;
+  private static final int ACCENT;
+  private static final int TEXT;
+  private static final int MUTED;
+  private static final int DIM;
+  private static final int SIDEBAR_W;
+  private static final int PLAYER_H;
+  private static final int SEARCH_H;
+  private static final int ROW_H;
+  private static final int CARD;
+  private static final int LEFT_BUTTON;
+  private static final int RIGHT_BUTTON;
+  private static final java.util.List<java.lang.String> EVENT_KEYS;
+  private final net.minecraft.client.gui.screens.Screen parent;
+  private final dev.ob8y.overtune.client.music.MusicPlayerConfig$State config;
+  private final dev.ob8y.overtune.client.music.PlaybackController playback;
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> tracks;
+  private java.util.Map<java.lang.String, java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>> albums;
+  private java.util.Map<java.lang.String, java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>> artists;
+  private net.minecraft.client.gui.components.EditBox searchBox;
+  private net.minecraft.client.gui.components.EditBox renameBox;
+  private net.minecraft.client.gui.components.EditBox metadataTitleBox;
+  private net.minecraft.client.gui.components.EditBox metadataArtistBox;
+  private net.minecraft.client.gui.components.EditBox metadataAlbumBox;
+  private net.minecraft.client.gui.components.EditBox metadataDurationBox;
+  private net.minecraft.client.gui.components.EditBox metadataCoverBox;
+  private dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$View view;
+  private java.lang.String selectedAlbum;
+  private java.lang.String selectedArtist;
+  private java.lang.String selectedPlaylist;
+  private java.lang.String selectedEvent;
+  private java.lang.String sortKey;
+  private boolean sortAscending;
+  private int scroll;
+  private int sidebarScroll;
+  private java.lang.String statusMessage;
+  private long statusUntilMs;
+  private int lastMouseX;
+  private int lastMouseY;
+  private dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$ContextMenu contextMenu;
+  private java.lang.String renamingPlaylist;
+  private dev.ob8y.overtune.client.music.model.MusicTrack draggedTrack;
+  private int draggedFromIndex;
+  private boolean draggingPlaylistTrack;
+  private final java.util.List<dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$RowHitArea> renderedRowHits;
+  private dev.ob8y.overtune.client.music.model.MusicTrack editingMetadataTrack;
+  private static dev.ob8y.overtune.client.music.PlaybackController sharedPlayback;
+  private static final java.util.Map<java.lang.String, net.minecraft.resources.Identifier> ALBUM_TEXTURES;
+  public dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen(net.minecraft.client.gui.screens.Screen);
+  private static dev.ob8y.overtune.client.music.PlaybackController playbackFor(net.minecraft.client.Minecraft);
+  private static void configurePlayback(dev.ob8y.overtune.client.music.PlaybackController, dev.ob8y.overtune.client.music.MusicPlayerConfig$State);
+  public static void clientTick(net.minecraft.client.Minecraft);
+  public static boolean playAutomaticEvent(net.minecraft.client.Minecraft, java.lang.String);
+  private static java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> eventTracks(java.lang.String, java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>, dev.ob8y.overtune.client.music.MusicPlayerConfig$State);
+  private static int eventRank(java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean titleIn(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String...);
+  private static boolean soundPathContainsStatic(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private static java.lang.String eventLabel(java.lang.String);
+  protected void init();
+  private net.minecraft.client.gui.components.EditBox metadataBox(java.lang.String);
+  public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+  public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);
+  public boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent, double, double);
+  public boolean mouseReleased(net.minecraft.client.input.MouseButtonEvent);
+  public boolean keyPressed(net.minecraft.client.input.KeyEvent);
+  public boolean mouseScrolled(double, double, double, double);
+  public void onClose();
+  private void drawSidebar(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  private int sidebarPlaylistTop();
+  private int sidebarPlaylistBottom();
+  private int sidebarContentHeight();
+  private int nav(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$View, java.lang.String);
+  private void drawMain(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  private void drawHome(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private void drawQueuePage(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private java.lang.String queueStatus();
+  private void drawSettings(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private void drawEvents(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private java.lang.String eventHelp(java.lang.String);
+  private void drawImports(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private void settingButton(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int, java.lang.String, java.lang.String);
+  private void smallButton(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, java.lang.String, int, int);
+  private int section(net.minecraft.client.gui.GuiGraphicsExtractor, java.lang.String, int, int);
+  private void drawHorizontalCards(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>, int, int);
+  private void drawPlaylistCards(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private java.util.List<java.lang.String> orderedPlaylistNames();
+  private java.lang.String contextualPlaylistName();
+  private void drawAlbumGrid(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int, java.lang.String);
+  private void drawArtistGrid(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private void drawNameGrid(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, java.util.List<java.lang.String>, java.lang.String, int, int, boolean);
+  private void drawArtistPage(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private void drawSearch(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int);
+  private void drawTrackPage(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int, java.lang.String, java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private void drawTrackTable(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int, java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private void header(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, java.lang.String, java.lang.String);
+  private void drawPlayer(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  private void control(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, java.lang.String, int, int);
+  private void drawContextMenu(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  private void drawSubmenu(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  private dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$MenuClickResult clickContextMenu(int, int);
+  private boolean openContextMenu(int, int);
+  private java.lang.String playlistAt(int, int);
+  private dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$RowHit rowAtScreen(int, int);
+  private java.lang.String eventRuleLabel(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private void toggleEventRule(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private dev.ob8y.overtune.client.music.MusicPlayerConfig$EventRuleSettings eventSettings(java.lang.String);
+  private void ensureSelectedEvent();
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> configuredEventTracks(java.lang.String);
+  private void addToPlaylist(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private void removeFromPlaylist(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private void moveInPlaylist(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String, int);
+  private int playlistTrackIndex(java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private int playlistRowIndexAt(int, int);
+  private void dragMoveInPlaylist(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String, int);
+  private void deletePlaylist(java.lang.String);
+  private void startRename(java.lang.String);
+  private void finishRename();
+  private void cancelRename();
+  private void startMetadataEdit(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void drawMetadataEditor(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  private void positionMetadataBoxes(int, int);
+  private boolean clickMetadataEditor(int, int);
+  private void saveMetadataEdit();
+  private void resetMetadataEdit();
+  private void cancelMetadataEdit();
+  private void setMetadataBoxesVisible(boolean);
+  private int metadataX();
+  private int metadataY();
+  private int parseDuration(java.lang.String, int);
+  private boolean clickSidebar(int, int);
+  private boolean clickMain(int, int, boolean);
+  private boolean clickSettings(int, int, int, int);
+  private boolean clickEvents(int, int, int, int, int);
+  private int nextEventSeconds(int, boolean);
+  private int nextEventCooldownFine(int);
+  private int nextValue(int, int[]);
+  private boolean clickImports(int, int, int, int);
+  private int nextFadeDuration(int);
+  private int nextEventCooldown(int);
+  private void playSmartContext();
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> smartContextTracks();
+  private java.lang.String smartContextLabel();
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> matchingTracks(java.util.function.Predicate<dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private boolean soundPathContains(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private boolean clickPlayer(int, int);
+  private void togglePlay();
+  private void playTrack(java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>, int);
+  private void afterPlaybackStarted();
+  private void clickHeader(int, int, int);
+  private java.lang.String cardNameAt(int, int, int, int, int, java.util.List<java.lang.String>);
+  private void reloadLibrary();
+  private static java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> loadConfiguredTracks(dev.ob8y.overtune.client.music.MusicPlayerConfig$State);
+  private static dev.ob8y.overtune.client.music.model.MusicTrack applyMetadataOverride(dev.ob8y.overtune.client.music.model.MusicTrack, dev.ob8y.overtune.client.music.MusicPlayerConfig$State);
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> sortedTracks(java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> likedTracks();
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> recentTracks();
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> playlistTracks(java.lang.String);
+  private void markRecent(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static void markRecent(dev.ob8y.overtune.client.music.MusicPlayerConfig$State, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void like(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void createPlaylist();
+  private void save();
+  private void status(java.lang.String);
+  private void seedBuiltInPlaylists();
+  private void seedPlaylist(java.lang.String, java.util.function.Predicate<dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private java.util.Map<java.lang.String, java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>> groupBy(java.util.function.Function<dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String>);
+  private boolean matches(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private java.lang.String greeting();
+  private void cardBase(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, int, int);
+  private void albumArt(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, java.lang.String);
+  private static java.util.Map<java.lang.String, net.minecraft.resources.Identifier> buildAlbumTextures();
+  private static net.minecraft.resources.Identifier albumTexture(java.lang.String);
+  public static net.minecraft.resources.Identifier albumTextureFor(java.lang.String);
+  private static java.lang.String albumKey(java.lang.String);
+  private int colorFor(java.lang.String, int);
+  private java.lang.String trim(java.lang.String, int);
+  private java.lang.String time(int);
+  private boolean in(int, int, int, int, int, int);
+  private static boolean lambda$seedBuiltInPlaylists$3(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$seedBuiltInPlaylists$2(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$seedBuiltInPlaylists$1(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$seedBuiltInPlaylists$0(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$playlistTracks$0(java.util.Set, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static dev.ob8y.overtune.client.music.model.MusicTrack lambda$recentTracks$0(dev.ob8y.overtune.client.music.model.MusicTrack, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private boolean lambda$likedTracks$0(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private java.lang.Integer lambda$sortedTracks$0(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static dev.ob8y.overtune.client.music.model.MusicTrack lambda$loadConfiguredTracks$0(dev.ob8y.overtune.client.music.MusicPlayerConfig$State, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$smartContextTracks$5(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$smartContextTracks$4(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$smartContextTracks$3(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$smartContextTracks$2(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private boolean lambda$smartContextTracks$1(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private boolean lambda$smartContextTracks$0(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static java.util.List lambda$clickEvents$0(java.lang.String);
+  private static dev.ob8y.overtune.client.music.model.MusicTrack lambda$configuredEventTracks$0(dev.ob8y.overtune.client.music.model.MusicTrack, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static java.util.List lambda$toggleEventRule$0(java.lang.String);
+  private void lambda$openContextMenu$15(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$openContextMenu$14(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$openContextMenu$13(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$openContextMenu$12(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$openContextMenu$11(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$openContextMenu$10(dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$RowHit);
+  private void lambda$openContextMenu$9(dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$RowHit);
+  private void lambda$openContextMenu$8(dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$RowHit);
+  private void lambda$openContextMenu$7(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private void lambda$openContextMenu$6(dev.ob8y.overtune.client.music.model.MusicTrack, java.lang.String);
+  private void lambda$openContextMenu$5(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$openContextMenu$4(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$openContextMenu$3(dev.ob8y.overtune.client.music.AdvancedMusicPlayerScreen$RowHit);
+  private void lambda$openContextMenu$2(java.lang.String);
+  private void lambda$openContextMenu$1(java.lang.String);
+  private void lambda$openContextMenu$0(java.lang.String);
+  private static boolean lambda$drawSearch$2(java.lang.String, java.lang.String);
+  private static boolean lambda$drawSearch$1(java.lang.String, java.lang.String);
+  private boolean lambda$drawSearch$0(java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private boolean lambda$drawAlbumGrid$0(java.lang.String, java.lang.String);
+  private static boolean lambda$drawAlbumGrid$1(java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void lambda$init$0(java.lang.String);
+  private static boolean lambda$eventTracks$17(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static int lambda$eventTracks$16(java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$15(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$14(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$13(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$12(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$11(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$10(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$9(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$8(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$7(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$6(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$5(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$4(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$3(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$2(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static boolean lambda$eventTracks$1(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private static dev.ob8y.overtune.client.music.model.MusicTrack lambda$eventTracks$0(dev.ob8y.overtune.client.music.model.MusicTrack, dev.ob8y.overtune.client.music.model.MusicTrack);
+  static {};
+}
+
+Compiled from "DirectMusicSoundInstance.java"
+public class dev.ob8y.overtune.client.music.DirectMusicSoundInstance extends net.minecraft.client.resources.sounds.AbstractSoundInstance {
+  private final net.minecraft.resources.Identifier eventId;
+  private final net.minecraft.client.resources.sounds.Sound sound;
+  public dev.ob8y.overtune.client.music.DirectMusicSoundInstance(net.minecraft.sounds.SoundEvent, net.minecraft.resources.Identifier, net.minecraft.resources.Identifier, float);
+  public net.minecraft.client.sounds.WeighedSoundEvents resolve(net.minecraft.client.sounds.SoundManager);
+  public net.minecraft.client.resources.sounds.Sound getSound();
+  public float getVolume();
+  public float getPitch();
+  private static boolean isImportedSound(net.minecraft.resources.Identifier);
+}
+
+Compiled from "ImportSongManager.java"
+public final class dev.ob8y.overtune.client.music.ImportSongManager {
+  public static final java.lang.String NAMESPACE;
+  private static final java.lang.String IMPORT_ROOT;
+  private static final java.lang.String WINDOWS_FFMPEG_X64_ZIP;
+  private static final java.lang.String WINDOWS_FFMPEG_ARM64_ZIP;
+  private static final java.lang.String BTBN_PROJECT_URL;
+  private static final java.util.List<java.lang.String> RECOGNIZED_EXTENSIONS;
+  private static volatile boolean conversionRunning;
+  private static volatile java.lang.String conversionStatus;
+  private static volatile boolean converterInstallRunning;
+  private static volatile java.lang.String converterInstallStatus;
+  private static final java.util.Map<java.lang.String, java.lang.Float> importedStreamStartSeconds;
+  private dev.ob8y.overtune.client.music.ImportSongManager();
+  public static java.nio.file.Path importFolder();
+  public static java.nio.file.Path ensureImportFolder();
+  public static java.nio.file.Path toolsFolder();
+  public static boolean openImportFolder();
+  public static java.util.List<dev.ob8y.overtune.client.music.ImportSongManager$ImportFile> scanFiles();
+  public static java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> loadImportedTracks();
+  public static java.util.Optional<java.util.concurrent.CompletableFuture<com.mojang.blaze3d.audio.SoundBuffer>> importedSoundBuffer(net.minecraft.resources.Identifier);
+  public static java.util.Optional<java.util.concurrent.CompletableFuture<net.minecraft.client.sounds.AudioStream>> importedAudioStream(net.minecraft.resources.Identifier);
+  public static boolean isImportedSoundPath(net.minecraft.resources.Identifier);
+  public static void startImportedStreamAt(net.minecraft.resources.Identifier, float);
+  public static boolean isConversionRunning();
+  public static boolean isConverterInstallRunning();
+  public static java.lang.String conversionStatus();
+  public static java.lang.String converterInstallStatus();
+  public static java.lang.String converterStatus();
+  public static boolean canInstallConverterAutomatically();
+  public static boolean openToolsFolder();
+  public static boolean openFfmpegHelp();
+  public static void startConverterInstall();
+  public static void startConversion();
+  private static void convertUnsupportedImports();
+  private static boolean isUpToDatePlayableOutput(java.nio.file.Path, java.time.Instant);
+  private static boolean convertToMinecraftOgg(java.nio.file.Path, java.nio.file.Path, java.nio.file.Path) throws java.io.IOException;
+  private static void installConverter();
+  private static java.net.URI windowsConverterDownloadUri();
+  private static void downloadConverterZip(java.net.URI, java.nio.file.Path) throws java.io.IOException;
+  private static java.nio.file.Path extractFfmpegExecutable(java.nio.file.Path, java.nio.file.Path) throws java.io.IOException;
+  private static void writeConverterSourceNote(java.nio.file.Path, java.net.URI) throws java.io.IOException;
+  private static java.time.Instant modified(java.nio.file.Path);
+  private static boolean runFfmpeg(java.nio.file.Path, java.nio.file.Path, java.nio.file.Path, java.lang.String);
+  private static java.util.Optional<java.nio.file.Path> findFfmpeg();
+  private static boolean isWindows();
+  private static java.util.Optional<java.nio.file.Path> findExecutableOnPath(java.lang.String);
+  private static boolean openPath(java.nio.file.Path);
+  private static float consumeImportedStreamStart(net.minecraft.resources.Identifier);
+  private static java.lang.String streamKey(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.sounds.AudioStream loadAudioStream(java.nio.file.Path, float);
+  private static void skipDecodedSeconds(net.minecraft.client.sounds.AudioStream, float) throws java.io.IOException;
+  private static com.mojang.blaze3d.audio.SoundBuffer loadSoundBuffer(java.nio.file.Path);
+  private static java.nio.file.Path fileForSoundResource(net.minecraft.resources.Identifier);
+  private static dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata metadataFor(java.nio.file.Path, net.minecraft.resources.Identifier, java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata>);
+  private static dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata withCalculatedDuration(java.nio.file.Path, dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata);
+  private static dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata defaultMetadata(java.nio.file.Path);
+  private static dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata knownC418Metadata(java.lang.String);
+  private static java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata> knownC418Tracks();
+  private static void alpha(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata>, java.lang.String, java.lang.String, int);
+  private static void beta(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata>, java.lang.String, java.lang.String, int);
+  private static void putKnown(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata>, java.lang.String, java.lang.String, java.lang.String, int);
+  private static int readOggDuration(java.nio.file.Path, int);
+  private static java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata> loadManifest();
+  private static dev.ob8y.overtune.client.music.ImportSongManager$ImportedMetadata defaultManifestMetadata(java.lang.String);
+  private static java.util.Map<java.nio.file.Path, java.lang.String> slugsFor(java.util.List<dev.ob8y.overtune.client.music.ImportSongManager$ImportFile>);
+  private static java.lang.String sanitizeSlug(java.lang.String);
+  private static java.lang.String extension(java.nio.file.Path);
+  private static java.lang.String audioKind(java.nio.file.Path);
+  private static boolean isMinecraftPlayableOgg(java.nio.file.Path, java.lang.String);
+  private static java.lang.String headerAscii(java.nio.file.Path, int);
+  private static java.lang.String extension(java.lang.String);
+  private static java.lang.String withoutExtension(java.lang.String);
+  private static java.lang.String prettify(java.lang.String);
+  private static java.lang.String normalizeManifestPath(java.lang.String);
+  private static java.lang.String firstString(com.google.gson.JsonObject, java.lang.String...);
+  private static java.lang.String stringOr(com.google.gson.JsonObject, java.lang.String, java.lang.String);
+  private static int durationOr(com.google.gson.JsonObject, int);
+  private static void writeReadme(java.nio.file.Path) throws java.io.IOException;
+  private static void writeFfmpegHelp(java.nio.file.Path) throws java.io.IOException;
+  private static void writeManifestExample(java.nio.file.Path) throws java.io.IOException;
+  private static boolean lambda$convertUnsupportedImports$0(dev.ob8y.overtune.client.music.ImportSongManager$ImportFile);
+  private static java.lang.String lambda$converterStatus$0(java.nio.file.Path);
+  private static net.minecraft.client.sounds.AudioStream lambda$importedAudioStream$0(java.nio.file.Path, float);
+  private static com.mojang.blaze3d.audio.SoundBuffer lambda$importedSoundBuffer$0(java.nio.file.Path);
+  private static void lambda$scanFiles$2(java.nio.file.Path, java.util.List, java.nio.file.Path);
+  private static java.lang.String lambda$scanFiles$1(java.nio.file.Path, java.nio.file.Path);
+  private static boolean lambda$scanFiles$0(java.nio.file.Path);
+  static {};
+}
+
+Compiled from "ModNowPlayingToast.java"
+public class dev.ob8y.overtune.client.music.ModNowPlayingToast implements net.minecraft.client.gui.components.toasts.Toast {
+  private static final java.lang.Object TOKEN;
+  private static final int WIDTH;
+  private static final int HEIGHT;
+  private static final int BG;
+  private static final int BORDER;
+  private static final int ACCENT;
+  private static final int TEXT;
+  private static final int MUTED;
+  private dev.ob8y.overtune.client.music.model.MusicTrack track;
+  private int durationMs;
+  private java.lang.String side;
+  private boolean reducedAnimations;
+  private long startedAt;
+  private net.minecraft.client.gui.components.toasts.Toast$Visibility visibility;
+  private dev.ob8y.overtune.client.music.ModNowPlayingToast(dev.ob8y.overtune.client.music.model.MusicTrack, dev.ob8y.overtune.client.music.MusicPlayerConfig$Settings);
+  public static void show(net.minecraft.client.Minecraft, dev.ob8y.overtune.client.music.model.MusicTrack, dev.ob8y.overtune.client.music.MusicPlayerConfig$Settings);
+  private void reset(dev.ob8y.overtune.client.music.model.MusicTrack, dev.ob8y.overtune.client.music.MusicPlayerConfig$Settings);
+  private void apply(dev.ob8y.overtune.client.music.MusicPlayerConfig$Settings);
+  public net.minecraft.client.gui.components.toasts.Toast$Visibility getWantedVisibility();
+  public void update(net.minecraft.client.gui.components.toasts.ToastManager, long);
+  public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.gui.Font, long);
+  public java.lang.Object getToken();
+  public float xPos(int, float);
+  public float yPos(int);
+  public int width();
+  public int height();
+  private static java.lang.String trim(net.minecraft.client.gui.Font, java.lang.String, int);
+  static {};
+}
+
+Compiled from "MusicLibrary.java"
+public final class dev.ob8y.overtune.client.music.MusicLibrary {
+  private static final java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.MusicLibrary$TrackMetadata> KNOWN_TRACK_METADATA;
+  private static final java.util.Map<java.lang.String, java.lang.Integer> KNOWN_DURATIONS;
+  private dev.ob8y.overtune.client.music.MusicLibrary();
+  public static java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> loadAllTracks();
+  private static void addSoundFileTracks(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private static void addCustomResourcePackTracks(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private static void addImportedFolderTracks(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack>);
+  private static void addCustomResourceRoot(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack>, net.minecraft.server.packs.resources.ResourceManager, java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.MusicLibrary$CustomTrackMetadata>, java.lang.String);
+  private static net.minecraft.resources.Identifier soundPathFromResource(net.minecraft.resources.Identifier);
+  private static java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.MusicLibrary$CustomTrackMetadata> loadCustomTrackManifest(net.minecraft.server.packs.resources.ResourceManager);
+  private static dev.ob8y.overtune.client.music.MusicLibrary$CustomTrackMetadata customMetadata(net.minecraft.resources.Identifier, java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.MusicLibrary$CustomTrackMetadata>);
+  private static dev.ob8y.overtune.client.music.MusicLibrary$CustomTrackMetadata defaultCustomMetadata(java.lang.String);
+  private static java.lang.String normalizeCustomPath(java.lang.String);
+  private static java.lang.String baseName(java.lang.String);
+  private static java.lang.String firstString(com.google.gson.JsonObject, java.lang.String...);
+  private static java.lang.String stringOr(com.google.gson.JsonObject, java.lang.String, java.lang.String);
+  private static int durationOr(com.google.gson.JsonObject, int);
+  private static int parseDurationText(java.lang.String, int);
+  private static boolean isMusicEvent(java.lang.String);
+  private static java.lang.String soundPath(com.google.gson.JsonElement);
+  private static boolean isAlbumMusicFile(java.lang.String);
+  private static java.lang.String prettifySoundFileTitle(java.lang.String);
+  private static java.lang.String inferAlbumFromSoundFile(java.lang.String, java.lang.String);
+  private static java.lang.String prettifyTitle(java.lang.String);
+  private static java.lang.String inferAlbum(java.lang.String);
+  private static java.lang.String inferArtist(java.lang.String, java.lang.String);
+  private static int inferDurationSeconds(java.lang.String, java.lang.String);
+  private static dev.ob8y.overtune.client.music.MusicLibrary$TrackMetadata metadataFor(java.lang.String);
+  private static java.lang.String normalizedSoundKey(java.lang.String);
+  private static java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.MusicLibrary$TrackMetadata> buildTrackMetadata();
+  private static void metadata(java.util.Map<java.lang.String, dev.ob8y.overtune.client.music.MusicLibrary$TrackMetadata>, java.lang.String, java.lang.String, java.lang.String, java.lang.String);
+  private static java.util.Map<java.lang.String, java.lang.Integer> buildDurations();
+  private static boolean lambda$addCustomResourceRoot$0(net.minecraft.resources.Identifier);
+  private static boolean lambda$addSoundFileTracks$0(java.lang.String, dev.ob8y.overtune.client.music.model.MusicTrack);
+  static {};
+}
+
+Compiled from "MusicPlayerConfig.java"
+public final class dev.ob8y.overtune.client.music.MusicPlayerConfig {
+  private static final com.google.gson.Gson GSON;
+  private static final java.lang.String FILE_NAME;
+  private dev.ob8y.overtune.client.music.MusicPlayerConfig();
+  public static dev.ob8y.overtune.client.music.MusicPlayerConfig$State load();
+  public static void save(dev.ob8y.overtune.client.music.MusicPlayerConfig$State);
+  private static java.nio.file.Path path();
+  static {};
+}
+
+Compiled from "OvertuneWorldEvents.java"
+public final class dev.ob8y.overtune.client.music.OvertuneWorldEvents {
+  private static final com.google.gson.Gson GSON;
+  private static final java.lang.String FILE_NAME;
+  private dev.ob8y.overtune.client.music.OvertuneWorldEvents();
+  public static dev.ob8y.overtune.client.music.OvertuneWorldEvents$WorldState load(java.lang.String);
+  public static void save(java.lang.String, dev.ob8y.overtune.client.music.OvertuneWorldEvents$WorldState);
+  private static dev.ob8y.overtune.client.music.OvertuneWorldEvents$State loadAll();
+  private static void saveAll(dev.ob8y.overtune.client.music.OvertuneWorldEvents$State);
+  private static java.nio.file.Path path();
+  private static dev.ob8y.overtune.client.music.OvertuneWorldEvents$WorldState lambda$load$0(java.lang.String);
+  static {};
+}
+
+Compiled from "PlaybackController.java"
+public final class dev.ob8y.overtune.client.music.PlaybackController {
+  private static final long FADE_MS;
+  private static final long MAX_FADE_MS;
+  private final net.minecraft.client.Minecraft client;
+  private final java.util.Random random;
+  private final java.util.List<dev.ob8y.overtune.client.music.PlaybackController$FadingSound> fadingSounds;
+  private java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> queue;
+  private int queueIndex;
+  private boolean shuffle;
+  private dev.ob8y.overtune.client.music.model.RepeatMode repeatMode;
+  private boolean suppressVanillaMusic;
+  private boolean fadesEnabled;
+  private long fadeMs;
+  private dev.ob8y.overtune.client.music.model.MusicTrack nowPlaying;
+  private net.minecraft.client.resources.sounds.SoundInstance nowPlayingInstance;
+  private boolean paused;
+  private float volume;
+  private float liveVolume;
+  private long trackStartMs;
+  private long pausedAtMs;
+  private float pendingSeekSeconds;
+  private long currentFadeStartMs;
+  private long currentFadeDurationMs;
+  private float currentFadeFrom;
+  private float currentFadeTo;
+  public dev.ob8y.overtune.client.music.PlaybackController(net.minecraft.client.Minecraft);
+  public void setVolume(float);
+  public float getVolume();
+  public void setSuppressVanillaMusic(boolean);
+  public void setFadeSettings(boolean, int);
+  public boolean isShuffle();
+  public void toggleShuffle();
+  public dev.ob8y.overtune.client.music.model.RepeatMode getRepeatMode();
+  public void cycleRepeat();
+  public dev.ob8y.overtune.client.music.model.MusicTrack getNowPlaying();
+  public int getQueueIndex();
+  public boolean isPaused();
+  public int getElapsedSeconds();
+  public void playQueue(java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>, int);
+  public void playQueueIndex(int);
+  public void playTrack(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private void startInstance(dev.ob8y.overtune.client.music.model.MusicTrack, float);
+  private void startInstance(dev.ob8y.overtune.client.music.model.MusicTrack, float, float);
+  public void stop();
+  public void togglePause();
+  public void next();
+  public void previous();
+  private int nextShuffleIndex();
+  public void setQueue(java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack>);
+  public java.util.List<dev.ob8y.overtune.client.music.model.MusicTrack> getQueue();
+  public void removeFromQueue(int);
+  public void moveInQueue(int, int);
+  public boolean seekToFraction(float);
+  private void restartImportedAt(float);
+  public void tick();
+  private void startCurrentFade(float, float, long);
+  private void updateCurrentFade();
+  private void fadeOut(net.minecraft.client.resources.sounds.SoundInstance, float);
+  private void updateFadingSounds();
+  private void suppressVanillaMusic();
+  private boolean isOvertuneSound(net.minecraft.client.resources.sounds.SoundInstance);
+  private long fadeDurationMs();
+  private void updateVolume(net.minecraft.client.resources.sounds.SoundInstance, float);
+  private boolean seekLive(float);
+  private boolean isImportedTrack(dev.ob8y.overtune.client.music.model.MusicTrack);
+  private net.minecraft.client.sounds.ChannelAccess$ChannelHandle channelHandle(net.minecraft.client.resources.sounds.SoundInstance);
+  private static float clamp01(float);
+  private static void lambda$seekLive$0(float, com.mojang.blaze3d.audio.Channel);
+  private static void lambda$updateVolume$0(float, com.mojang.blaze3d.audio.Channel);
+}
+
+Compiled from "MusicTrack.java"
+public final class dev.ob8y.overtune.client.music.model.MusicTrack extends java.lang.Record {
+  private final net.minecraft.resources.Identifier id;
+  private final net.minecraft.sounds.SoundEvent soundEvent;
+  private final java.lang.String title;
+  private final java.lang.String artist;
+  private final java.lang.String album;
+  private final int durationSeconds;
+  private final net.minecraft.resources.Identifier soundPath;
+  private final java.lang.String coverKey;
+  public dev.ob8y.overtune.client.music.model.MusicTrack(net.minecraft.resources.Identifier, net.minecraft.sounds.SoundEvent, java.lang.String, java.lang.String, java.lang.String, int);
+  public dev.ob8y.overtune.client.music.model.MusicTrack(net.minecraft.resources.Identifier, net.minecraft.sounds.SoundEvent, java.lang.String, java.lang.String, java.lang.String, int, net.minecraft.resources.Identifier);
+  public dev.ob8y.overtune.client.music.model.MusicTrack(net.minecraft.resources.Identifier, net.minecraft.sounds.SoundEvent, java.lang.String, java.lang.String, java.lang.String, int, net.minecraft.resources.Identifier, java.lang.String);
+  public java.lang.String durationText();
+  public java.lang.String configId();
+  public java.lang.String albumArtKey();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.resources.Identifier id();
+  public net.minecraft.sounds.SoundEvent soundEvent();
+  public java.lang.String title();
+  public java.lang.String artist();
+  public java.lang.String album();
+  public int durationSeconds();
+  public net.minecraft.resources.Identifier soundPath();
+  public java.lang.String coverKey();
+}
+
+Compiled from "RepeatMode.java"
+public final class dev.ob8y.overtune.client.music.model.RepeatMode extends java.lang.Enum<dev.ob8y.overtune.client.music.model.RepeatMode> {
+  public static final dev.ob8y.overtune.client.music.model.RepeatMode OFF;
+  public static final dev.ob8y.overtune.client.music.model.RepeatMode QUEUE;
+  public static final dev.ob8y.overtune.client.music.model.RepeatMode ONE;
+  private static final dev.ob8y.overtune.client.music.model.RepeatMode[] $VALUES;
+  public static dev.ob8y.overtune.client.music.model.RepeatMode[] values();
+  public static dev.ob8y.overtune.client.music.model.RepeatMode valueOf(java.lang.String);
+  private dev.ob8y.overtune.client.music.model.RepeatMode();
+  public dev.ob8y.overtune.client.music.model.RepeatMode next();
+  private static dev.ob8y.overtune.client.music.model.RepeatMode[] $values();
+  static {};
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "overtune",
+  "version": "${version}",
+  "name": "Overtune Community Port (Alpha)",
+  "description": "Partial clean-source reimplementation for Minecraft 26.3. NOT the full original Overtune.",
+  "authors": ["Original: OB8Y", "Community port maintainers"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.ob8y.overtune.client.OvertuneClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
