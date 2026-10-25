@@ -1,0 +1,56 @@
+plugins {
+    // Fabric Loom — плагин для сборки Fabric-модов (поддерживает 1.21.x)
+    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    // Для этого мода дополнительные репозитории не нужны:
+    //  - Gson (JSON), slf4j и java.net.http.HttpClient уже есть в Minecraft / JDK 21,
+    //  - Fabric API берётся из maven.fabricmc.net, который Loom подключает сам.
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    // Fabric API: HudRenderCallback, KeyBindingHelper, ClientTickEvents, ClientLifecycleEvents
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // JNA в этом моде намеренно НЕ используется: WinRT-API (Windows.Media.Control) через JNA
+    // реализуется крайне громоздко, поэтому для Windows используется PowerShell-мост
+    // (см. MediaSessionTracker). Если понадобится JNA (например, для чтения заголовков окон),
+    // он уже поставляется вместе с Minecraft и доступен на compile-classpath.
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": inputs.properties.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = "UTF-8"
+}
+
+java {
+    // Исходники в отдельный jar — удобно при публикации
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    inputs.property "archivesName", project.base.archivesName
+}

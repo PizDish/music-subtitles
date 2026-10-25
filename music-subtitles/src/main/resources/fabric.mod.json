@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "musicsubtitles",
+  "version": "${version}",
+  "name": "Music Subtitles (Lyrics HUD)",
+  "description": "Показывает синхронизированный текст песни из Spotify / Yandex Music / SoundCloud поверх HUD. Только клиент.",
+  "authors": ["You"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.example.musicsubtitles.MusicSubtitlesMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "1.21.7",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
